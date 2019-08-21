@@ -38,7 +38,7 @@ export class SLKFileManager {
             console.log(JSON.stringify(unitData));
         }
         for (const field in unitData) {
-            if (field !== 'isCustom' && field !== 'baseUnit') {
+            if (field !== 'isCustom' && field !== 'baseUnit' && field !== 'GetName' && field !== 'setDefaults') {
                 const fieldData: UnitField = this.FieldData.get(field);
                 const file: SLKFile =this.getSlkFile(fieldData.slk);
                 // @ts-ignore

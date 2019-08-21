@@ -1,4 +1,4 @@
-import {WCJsonToTs} from "./WCJsonToTs";
+import {WCJsonToSLK} from "./WCJsonToSLK";
 import {dirname, join} from "path";
 
-new WCJsonToTs(join(dirname(__dirname), 'Units.json'), join(dirname(__dirname), 'Units'));
+new WCJsonToSLK(join(dirname(__dirname), 'Units.json'), join(dirname(__dirname), 'Units'));

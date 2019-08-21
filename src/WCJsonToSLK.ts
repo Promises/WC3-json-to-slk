@@ -3,7 +3,7 @@ import {dirname, join} from "path";
 import {UnitField, WCUnit} from "./models/Unit";
 import {SLKFileManager} from "./models/SLKFileManager";
 
-export class WCJsonToTs {
+export class WCJsonToSLK {
     private inputFilePath: string;
     private outputFolder: string;
     private DefaultUnits: Map<string, WCUnit> = new Map<string, WCUnit>();
@@ -25,6 +25,10 @@ export class WCJsonToTs {
         }
         if (!this.LoadJsonObject()) {
             console.error('failed to load input, exiting');
+            return;
+        }
+        if (this.FieldData.size === 0) {
+            console.error('No FieldData, exiting');
             return;
         }
         if (this.UnitMap.size === 0) {
