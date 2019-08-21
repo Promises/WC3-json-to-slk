@@ -1,9 +1,6 @@
-import {readFileSync} from "fs-extra";
+import {readFileSync, existsSync} from "fs-extra";
 import {dirname, join} from "path";
-import {createReadStream, existsSync} from "fs";
-import {SLKFileDef, UnitField, WCUnit} from "./models/Unit";
-import {createInterface, ReadLine} from "readline";
-import {SLKFile} from "./models/SLKFile";
+import {UnitField, WCUnit} from "./models/Unit";
 import {SLKFileManager} from "./models/SLKFileManager";
 
 export class WCJsonToTs {
@@ -119,10 +116,6 @@ export class WCJsonToTs {
         return '';
     }
 
-    public GetUnitFieldData(fieldName: string): UnitField {
-        let fieldData: UnitField | undefined = this.FieldData.get(fieldName);
-        return <UnitField>fieldData;
-    }
 
     private CleanType(fieldName: string, data: string): any {
 
