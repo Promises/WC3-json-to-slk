@@ -108,23 +108,16 @@ export class SLKFile {
                         let newvalue = "";
 
                         if (builtFields.has(fieldDef.field)) {
+
                             switch (fieldDef.index) {
                                 case '0':
                                     newvalue = `${this.pendingFields.get(fieldName)},${builtFields.get(fieldDef.field)}`;
-                                    if (fieldDef.type === 'string') {
-                                        newvalue = `"${newvalue}"`
-                                    }
                                     builtFields.set(fieldDef.field,
                                         newvalue,
                                     );
                                     break;
                                 case '1':
                                     newvalue = `${builtFields.get(fieldDef.field)},${this.pendingFields.get(fieldName)}`;
-
-
-                                    if (fieldDef.type === 'string') {
-                                        newvalue = `"${newvalue}"`
-                                    }
                                     builtFields.set(fieldDef.field,
                                         newvalue,
                                     );
@@ -134,11 +127,15 @@ export class SLKFile {
                                     break;
                             }
                         } else {
+
                             newvalue = this.pendingFields.get(fieldName);
+                            if (fieldDef.ID === 'utub' || fieldDef.ID === 'unam' ) {
+                                newvalue = `"${newvalue}"`
+                            }
                             builtFields.set(fieldDef.field, newvalue);
                         }
                     }
-                    for(const field of builtFields.keys()){
+                    for (const field of builtFields.keys()) {
                         this.currentUnit.push(`${field}=${builtFields.get(field)}`);
                     }
                     // if (fieldData.type === 'string') {
