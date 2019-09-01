@@ -1,6 +1,6 @@
 {
   "name": "wc3-json-to-slk",
-  "version": "1.0.11",
+  "version": "1.0.15",
   "description": "",
   "main": "dist/index.js",
   "scripts": {
@@ -14,6 +14,7 @@
   },
   "dependencies": {
     "@types/fs-extra": "^8.0.0",
-    "fs-extra": "^8.1.0"
+    "fs-extra": "^8.1.0",
+    "wc3-objectified-handler": "0.0.7"
   }
 }

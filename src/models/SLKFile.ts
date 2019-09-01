@@ -1,6 +1,7 @@
-import {FileName, SLKFileDef, SLKTag, UnitField} from "./Unit";
 import {existsSync, mkdirSync, readFileSync, writeFileSync} from "fs";
 import {dirname, join} from "path";
+import {FileName, SLKFileDef, SLKTag} from "wc3-objectified-handler/dist/lib/data/Fields";
+import {UnitField} from "wc3-objectified-handler/dist/lib/data/Unit";
 
 export class SLKFile {
     private lines: string[] = [];

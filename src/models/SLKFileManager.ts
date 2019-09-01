@@ -1,5 +1,7 @@
 import {SLKFile} from "./SLKFile";
-import {SLKFileDef, UnitField, WCUnit} from "./Unit";
+import {WC3ObjectHandler} from "wc3-objectified-handler";
+import {SLKFileDef} from "wc3-objectified-handler/dist/lib/data/Fields";
+import {UnitField, WCUnit} from "wc3-objectified-handler/dist/lib/data/Unit";
 
 export class SLKFileManager {
     private CampaignUnitFunc: SLKFile;
@@ -8,16 +10,16 @@ export class SLKFileManager {
     private UnitData: SLKFile;
     private UnitBalance: SLKFile;
     private UnitUI: SLKFile;
-    private FieldData: Map<string, UnitField>;
+    private objectHandler: WC3ObjectHandler;
 
-    constructor(FieldData: Map<string, UnitField>) {
+    constructor(objectHandler: WC3ObjectHandler) {
         this.CampaignUnitFunc = new SLKFile(SLKFileDef.CAMPAIGN_UNIT_FUNC);
         this.UnitWeapons = new SLKFile(SLKFileDef.UNIT_WEAPONS);
         this.UnitAbilities = new SLKFile(SLKFileDef.UNIT_ABILITIES);
         this.UnitBalance = new SLKFile(SLKFileDef.UNIT_BALANCE);
         this.UnitData = new SLKFile(SLKFileDef.UNIT_DATA);
         this.UnitUI = new SLKFile(SLKFileDef.UNIT_UI);
-        this.FieldData = FieldData;
+        this.objectHandler = objectHandler;
     }
 
     public setCount(count: number): void {
@@ -27,6 +29,7 @@ export class SLKFileManager {
         this.UnitData.setCount(count);
         this.UnitUI.setCount(count);
     }
+
     public writeUnit(UID: string, unitData: WCUnit) {
         this.CampaignUnitFunc.startUnit(UID);
         this.UnitWeapons.startUnit(UID);
@@ -34,15 +37,15 @@ export class SLKFileManager {
         this.UnitBalance.startUnit(UID);
         this.UnitData.startUnit(UID);
         this.UnitUI.startUnit(UID);
-        if(UID === 'h00L'){
-            console.log(JSON.stringify(unitData));
-        }
         for (const field in unitData) {
             if (field !== 'isCustom' && field !== 'baseUnit' && field !== 'GetName' && field !== 'setDefaults') {
-                const fieldData: UnitField = this.FieldData.get(field);
-                const file: SLKFile =this.getSlkFile(fieldData.slk);
-                // @ts-ignore
-                file.writeField(unitData[field], fieldData);
+                const fieldData: UnitField | undefined = this.objectHandler.GetUnitFieldData(field);
+                if (fieldData) {
+
+                    const file: SLKFile = this.getSlkFile(fieldData.slk);
+                    // @ts-ignore
+                    file.writeField(unitData[field], fieldData);
+                }
             }
         }
 
